@@ -8,10 +8,10 @@ import {
   Menu, ArrowRight, Shield, Check, X, Box, 
   Receipt, Zap, Sparkles, Fingerprint, Twitter, Linkedin, Facebook,
   CreditCard, UserX, PackageSearch, Gavel, Smartphone, Globe2,
-  Eye, Target, Compass // Added these imports
+  Eye, Target, Compass
 } from 'lucide-react';
 import { Arimo } from 'next/font/google';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion'; // Added Variants to import
 
 // Configuring the Arimo font
 const arimo = Arimo({ 
@@ -21,13 +21,17 @@ const arimo = Arimo({
   display: 'swap',
 });
 
-// --- Animation Variants ---
-const fadeInUp = {
+// --- Animation Variants (Typed to fix build error) ---
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 0.6, ease: "easeOut" } 
+  }
 };
 
-const staggerContainer = {
+const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -35,7 +39,7 @@ const staggerContainer = {
   }
 };
 
-const scaleIn = {
+const scaleIn: Variants = {
   hidden: { opacity: 0, scale: 0.95 },
   visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } }
 };
@@ -163,7 +167,7 @@ export default function LandingPage() {
                 {/* Logo Area */}
                 <div 
                   className="flex items-center relative z-50 cursor-pointer"
-                  onClick={(e) => scrollToSection(e as any, 'home')}
+                  onClick={(e) => scrollToSection(e, 'home')}
                 >
                   <div className="relative w-40 h-10 md:w-56 md:h-14 transition-all"> 
                     <Image 
@@ -182,7 +186,7 @@ export default function LandingPage() {
                     <a 
                       key={item.name} 
                       href={`#${item.id}`} 
-                      onClick={(e) => scrollToSection(e, item.id)}
+                      onClick={(e) => scrollToSection(e as any, item.id)}
                       className="hover:text-[#152570] relative group transition-colors"
                     >
                       {item.name}
@@ -228,7 +232,7 @@ export default function LandingPage() {
                         href={`#${item.id}`} 
                         onClick={(e) => {
                           setIsMobileMenuOpen(false);
-                          scrollToSection(e, item.id);
+                          scrollToSection(e as any, item.id);
                         }} 
                         className="py-3 border-b border-slate-100"
                       >
@@ -378,7 +382,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* --- Vision, Mission, Purpose Section (NEW SECTION) --- */}
+        {/* --- Vision, Mission, Purpose Section --- */}
         <section className="py-16 md:py-24 bg-white relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
@@ -801,7 +805,7 @@ export default function LandingPage() {
                  <div className="lg:col-span-2 pr-8">
                      <div 
                         className="flex items-center relative cursor-pointer mb-6"
-                        onClick={(e) => scrollToSection(e as any, 'home')}
+                        onClick={(e) => scrollToSection(e, 'home')}
                       >
                         <div className="relative w-40 h-10 md:w-48 md:h-12 transition-all"> 
                           <Image 
