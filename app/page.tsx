@@ -7,7 +7,8 @@ import {
   ShieldCheck, AlertTriangle, Wallet, Truck, CheckCircle2, Lock, 
   Menu, ArrowRight, Shield, Check, X, Box, 
   Receipt, Zap, Sparkles, Fingerprint, Twitter, Linkedin, Facebook,
-  CreditCard, UserX, PackageSearch, Gavel, Smartphone, Globe2
+  CreditCard, UserX, PackageSearch, Gavel, Smartphone, Globe2,
+  Eye, Target, Compass // Added these imports
 } from 'lucide-react';
 import { Arimo } from 'next/font/google';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -377,8 +378,86 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* --- Vision, Mission, Purpose Section (NEW SECTION) --- */}
+        <section className="py-16 md:py-24 bg-white relative">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            {/* Header */}
+            <SectionHeader 
+              badge="About VendorVentory"
+              title="Africa's E-Commerce Trust Infrastructure"
+              subtitle="We're building the foundation of trust that will power the next generation of African commerce"
+            />
+
+            {/* Cards Grid */}
+            <motion.div 
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+            >
+              {/* Vision */}
+              <motion.div variants={fadeInUp} className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm relative overflow-hidden group hover:shadow-lg transition-all">
+                <div className="absolute -bottom-4 -right-4 text-slate-50 group-hover:text-blue-50 transition-colors pointer-events-none">
+                    <Eye size={120} strokeWidth={1} /> 
+                </div>
+                <div className="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center text-white mb-6 relative z-10">
+                  <Eye size={28} />
+                </div>
+                <h3 className="text-2xl font-bold text-[#152570] mb-4 relative z-10">Vision</h3>
+                <p className="text-slate-500 leading-relaxed relative z-10">To become Africa's most trusted infrastructure for safe and transparent online commerce.</p>
+              </motion.div>
+
+              {/* Mission */}
+              <motion.div variants={fadeInUp} className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm relative overflow-hidden group hover:shadow-lg transition-all">
+                 <div className="absolute -bottom-4 -right-4 text-slate-50 group-hover:text-green-50 transition-colors pointer-events-none">
+                    <Target size={120} strokeWidth={1} /> 
+                </div>
+                <div className="w-14 h-14 bg-[#22c55e] rounded-xl flex items-center justify-center text-white mb-6 relative z-10">
+                  <Target size={28} />
+                </div>
+                <h3 className="text-2xl font-bold text-[#152570] mb-4 relative z-10">Mission</h3>
+                <p className="text-slate-500 leading-relaxed relative z-10">To protect buyers, empower vendors, and eliminate fraud through escrow payments, delivery verification, and structural digital transactions.</p>
+              </motion.div>
+
+              {/* Purpose */}
+              <motion.div variants={fadeInUp} className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm relative overflow-hidden group hover:shadow-lg transition-all">
+                 <div className="absolute -bottom-4 -right-4 text-slate-50 group-hover:text-purple-50 transition-colors pointer-events-none">
+                    <Compass size={120} strokeWidth={1} /> 
+                </div>
+                <div className="w-14 h-14 bg-purple-600 rounded-xl flex items-center justify-center text-white mb-6 relative z-10">
+                  <Compass size={28} />
+                </div>
+                <h3 className="text-2xl font-bold text-[#152570] mb-4 relative z-10">Purpose</h3>
+                <p className="text-slate-500 leading-relaxed relative z-10">To replace informal, risky online transactions with a system built on trust, proof, and accountability.</p>
+              </motion.div>
+            </motion.div>
+
+            {/* Bottom Banner */}
+            <motion.div 
+              variants={scaleIn}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="bg-[#152570] rounded-3xl p-8 md:p-12 text-center text-white shadow-xl relative overflow-hidden"
+            >
+              {/* Background decoration */}
+              <div className="absolute top-0 right-0 p-32 bg-blue-500 rounded-full blur-3xl opacity-10 -translate-y-1/2 translate-x-1/2"></div>
+              
+              <div className="relative z-10 max-w-3xl mx-auto">
+                <h3 className="text-2xl md:text-3xl font-bold mb-6">Trust Isn't Optional — It's Essential</h3>
+                <p className="text-blue-100 text-lg leading-relaxed">
+                  Every day, billions of naira change hands through informal online channels. We're here to make those transactions safer, clearer, and more accountable for everyone involved.
+                </p>
+              </div>
+            </motion.div>
+
+          </div>
+        </section>
+
         {/* --- Problem Section --- */}
-        <section id="features" className="py-16 md:py-24 bg-white relative">
+        <section id="features" className="py-16 md:py-24 bg-slate-50 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeader 
                badge={<span className="flex items-center gap-1.5"><AlertTriangle size={14} /> The Risk</span>}
@@ -437,7 +516,7 @@ export default function LandingPage() {
         </section>
 
         {/* --- How it Works Section --- */}
-        <section id="how-it-works" className="py-16 md:py-24 bg-slate-50 relative overflow-hidden">
+        <section id="how-it-works" className="py-16 md:py-24 bg-white relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -497,7 +576,7 @@ export default function LandingPage() {
         </section>
 
         {/* --- Target Audience (Bento Grid) --- */}
-        <section id="who-its-for" className="py-16 md:py-24 bg-white">
+        <section id="who-its-for" className="py-16 md:py-24 bg-slate-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <SectionHeader 
                   badge={<span className="flex items-center gap-2"><Globe2 size={16}/> The Ecosystem</span>}
@@ -542,7 +621,7 @@ export default function LandingPage() {
                           key={idx} 
                           variants={scaleIn}
                           whileHover={{ y: -8 }}
-                          className="group flex flex-col h-full bg-slate-50 rounded-[32px] overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300"
+                          className="group flex flex-col h-full bg-white rounded-[32px] overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300"
                       >
                           <div className="relative h-48 md:h-64 overflow-hidden">
                               <Image src={card.img} alt={card.title} fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
