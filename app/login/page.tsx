@@ -1,8 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useTransition } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { signIn } from "next-auth/react"; // Connects to NextAuth
 import { 
   ShieldCheck, 
   Mail, 
@@ -12,11 +14,11 @@ import {
   Shield, 
   ArrowRight,
   Users,
-  CheckCircle2
+  CheckCircle2,
+  AlertCircle
 } from 'lucide-react';
 import { Arimo } from 'next/font/google';
 
-// Typography setup
 const arimo = Arimo({ 
   subsets: ['latin'], 
   weight: ['400', '500', '600', '700'],
@@ -37,77 +39,73 @@ const GoogleIcon = () => (
 );
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    startTransition(async () => {
+      try {
+        const result = await signIn("credentials", {
+          email: formData.email,
+          password: formData.password,
+          redirect: false, // We handle redirect manually
+        });
+
+        if (result?.error) {
+          setError("Invalid email or password");
+        } else {
+          router.push("/dashboard"); // Redirect to dashboard on success
+          router.refresh(); // Ensure the layout updates with the user session
+        }
+      } catch (err) {
+        setError("Something went wrong. Please try again.");
+      }
+    });
+  };
+
+  const handleGoogleLogin = () => {
+    signIn("google", { callbackUrl: "/" });
+  };
 
   return (
     <div className={`min-h-screen flex flex-col lg:flex-row ${arimo.variable} ${arimo.className} bg-[#F8FAFC]`}>
       
-      {/* --- Left Side: Branding (Hidden on mobile/tablet) --- */}
+      {/* --- Left Side: Branding --- */}
       <div className="hidden lg:flex w-full lg:w-1/2 relative bg-[#152570] flex-col justify-between p-12 xl:p-20 overflow-hidden h-screen sticky top-0">
-        
-        {/* Background Overlay */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-br from-[#152570]/95 via-[#152570]/80 to-[#152570]/90 z-10" /> 
-          <Image 
-            src="/images/vendors.jpg" 
-            alt="Vendor Background" 
-            fill 
-            className="object-cover opacity-60 mix-blend-overlay"
-            priority
-          />
+          <Image src="/images/vendors.jpg" alt="Vendor Background" fill className="object-cover opacity-60 mix-blend-overlay" priority />
         </div>
-
-        {/* Content Layer */}
         <div className="relative z-20 h-full flex flex-col">
-          {/* Logo */}
-          <Link href="/">
-            <div className="flex items-center gap-3 text-white mb-12 cursor-pointer">
-                <Shield size={32} strokeWidth={2.5} className="text-[#22c55e]" />
-                <span className="text-2xl font-bold tracking-tight">Vendor Ventory</span>
-            </div>
-          </Link>
-
-          {/* Main Text */}
+          <Link href="/"><div className="flex items-center gap-3 text-white mb-12 cursor-pointer"><Shield size={32} strokeWidth={2.5} className="text-[#22c55e]" /><span className="text-2xl font-bold tracking-tight">Vendor Ventory</span></div></Link>
           <div className="mt-auto mb-12">
-            <h1 className="text-4xl xl:text-6xl font-bold text-white mb-6 leading-[1.1]">
-              Welcome back to your <br /> <span className="text-[#22c55e]">dashboard</span>
-            </h1>
-            <p className="text-blue-100 text-lg mb-12 max-w-md font-light leading-relaxed">
-              Log in to manage your orders, track escrow payments, and verify deliveries.
-            </p>
-
-            {/* Feature List */}
+            <h1 className="text-4xl xl:text-6xl font-bold text-white mb-6 leading-[1.1]">Welcome back to your <br /> <span className="text-[#22c55e]">dashboard</span></h1>
+            <p className="text-blue-100 text-lg mb-12 max-w-md font-light leading-relaxed">Log in to manage your orders, track escrow payments, and verify deliveries.</p>
             <div className="space-y-8">
               {[
-                { 
-                  icon: <ShieldCheck className="text-white" size={24} />, 
-                  title: "Secure Transactions", 
-                  desc: "Your data and funds are always protected." 
-                },
-                { 
-                  icon: <Users className="text-white" size={24} />, 
-                  title: "Vendor Network", 
-                  desc: "Connect with buyers and logistics partners." 
-                },
+                { icon: <ShieldCheck className="text-white" size={24} />, title: "Secure Transactions", desc: "Your data and funds are always protected." },
+                { icon: <Users className="text-white" size={24} />, title: "Vendor Network", desc: "Connect with buyers and logistics partners." },
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-5">
-                  <div className="w-12 h-12 bg-white/10 border border-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shrink-0">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-white font-bold text-lg">{item.title}</h3>
-                    <p className="text-blue-200 text-sm font-light">
-                      {item.desc}
-                    </p>
-                  </div>
+                  <div className="w-12 h-12 bg-white/10 border border-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shrink-0">{item.icon}</div>
+                  <div><h3 className="text-white font-bold text-lg">{item.title}</h3><p className="text-blue-200 text-sm font-light">{item.desc}</p></div>
                 </div>
               ))}
             </div>
           </div>
-          
-          <div className="text-blue-300 text-xs">
-             © 2026 VendorVentory Inc.
-          </div>
+          <div className="text-blue-300 text-xs">© 2026 VendorVentory Inc.</div>
         </div>
       </div>
 
@@ -115,7 +113,6 @@ export default function LoginPage() {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 overflow-y-auto">
         <div className="w-full max-w-lg">
           
-          {/* Mobile Logo (Only visible on small screens) */}
           <div className="lg:hidden flex items-center gap-2 text-[#152570] mb-8">
             <Shield size={28} strokeWidth={2.5} className="text-[#152570]" />
             <span className="text-xl font-bold tracking-tight">Vendor Ventory</span>
@@ -126,35 +123,36 @@ export default function LoginPage() {
             <p className="text-slate-500">Please enter your details to sign in.</p>
           </div>
 
-          {/* Google Login Button */}
-          <button className="w-full flex items-center justify-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-[#152570] font-semibold h-14 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md mb-6 group">
+          <button onClick={handleGoogleLogin} className="w-full flex items-center justify-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-[#152570] font-semibold h-14 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md mb-6 group">
             <GoogleIcon />
             <span>Sign in with Google</span>
           </button>
 
-          {/* Divider */}
           <div className="relative flex py-2 items-center mb-6">
             <div className="flex-grow border-t border-slate-200"></div>
             <span className="flex-shrink-0 mx-4 text-slate-400 text-sm font-medium">Or sign in with email</span>
             <div className="flex-grow border-t border-slate-200"></div>
           </div>
 
-          <form className="space-y-5">
+          <form onSubmit={handleLogin} className="space-y-5">
             
-            {/* Email */}
             <div className="space-y-1.5">
               <label className="text-sm font-semibold text-[#152570] block">Email Address</label>
               <div className="relative group">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#152570] transition-colors" size={20} />
                 <input 
+                  name="email"
                   type="email" 
+                  value={formData.email}
+                  onChange={handleChange}
+                  disabled={isPending}
                   placeholder="vendor@example.com"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 pl-12 pr-4 text-[#152570] placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#152570]/20 focus:border-[#152570] transition-all"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 pl-12 pr-4 text-[#152570] placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#152570]/20 focus:border-[#152570] transition-all disabled:opacity-50"
+                  required
                 />
               </div>
             </div>
 
-            {/* Password */}
             <div className="space-y-1.5">
               <div className="flex justify-between items-center">
                   <label className="text-sm font-semibold text-[#152570]">Password</label>
@@ -167,9 +165,14 @@ export default function LoginPage() {
               <div className="relative group">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#152570] transition-colors" size={20} />
                 <input 
+                  name="password"
                   type={showPassword ? "text" : "password"} 
+                  value={formData.password}
+                  onChange={handleChange}
+                  disabled={isPending}
                   placeholder="••••••••"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 pl-12 pr-12 text-[#152570] placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#152570]/20 focus:border-[#152570] transition-all"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 pl-12 pr-12 text-[#152570] placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#152570]/20 focus:border-[#152570] transition-all disabled:opacity-50"
+                  required
                 />
                 <button 
                   type="button"
@@ -181,12 +184,21 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* Submit Button */}
-            <button className="w-full bg-[#22c55e] hover:bg-green-500 text-white font-bold h-14 rounded-xl shadow-lg shadow-green-500/20 transition-all hover:scale-[1.01] active:scale-[0.98] mt-4 flex items-center justify-center gap-2 group">
-              Log In <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+            {error && (
+              <div className="p-3 bg-red-50 text-red-500 rounded-xl text-sm flex items-center gap-2 border border-red-100">
+                <AlertCircle size={16} /> {error}
+              </div>
+            )}
+
+            <button 
+              type="submit" 
+              disabled={isPending}
+              className="w-full bg-[#22c55e] hover:bg-green-500 text-white font-bold h-14 rounded-xl shadow-lg shadow-green-500/20 transition-all hover:scale-[1.01] active:scale-[0.98] mt-4 flex items-center justify-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {isPending ? "Logging in..." : "Log In"} 
+              {!isPending && <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />}
             </button>
 
-            {/* Footer Links */}
             <div className="text-center pt-4">
               <p className="text-slate-500">
                 Don't have an account? <Link href="/signup" className="text-[#152570] font-bold hover:underline">Sign up</Link>

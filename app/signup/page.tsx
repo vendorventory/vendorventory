@@ -1,8 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useTransition } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { register } from "@/actions/register"; // Import the server action
 import { 
   ShieldCheck, 
   Store, 
@@ -10,10 +12,11 @@ import {
   Lock, 
   Eye, 
   EyeOff, 
-  TrendingUp, 
   Users, 
   Shield,
-  ArrowRight
+  ArrowRight,
+  AlertCircle,
+  CheckCircle2
 } from 'lucide-react';
 import { Arimo } from 'next/font/google';
 
@@ -25,7 +28,7 @@ const arimo = Arimo({
   display: 'swap',
 });
 
-// Google Icon Component for pixel-perfect rendering
+// Google Icon Component
 const GoogleIcon = () => (
   <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
     <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">
@@ -38,13 +41,59 @@ const GoogleIcon = () => (
 );
 
 export default function SignupPage() {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Form State
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+
+  // Feedback State
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  // Handle Input Changes
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  // Handle Submission
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match!");
+      return;
+    }
+
+    startTransition(() => {
+      register(formData).then((data) => {
+        if (data.error) {
+          setError(data.error);
+        }
+        if (data.success) {
+          setSuccess(data.success);
+          // Optional: Clear form or redirect immediately
+          setTimeout(() => router.push("/login"), 2000);
+        }
+      });
+    });
+  };
 
   return (
     <div className={`min-h-screen flex flex-col lg:flex-row ${arimo.variable} ${arimo.className} bg-[#F8FAFC]`}>
       
-      {/* --- Left Side: Branding (Hidden on mobile/tablet) --- */}
+      {/* --- Left Side: Branding --- */}
       <div className="hidden lg:flex w-full lg:w-1/2 relative bg-[#152570] flex-col justify-between p-12 xl:p-20 overflow-hidden h-screen sticky top-0">
         
         {/* Background Overlay */}
@@ -61,7 +110,6 @@ export default function SignupPage() {
 
         {/* Content Layer */}
         <div className="relative z-20 h-full flex flex-col">
-          {/* Logo */}
           <Link href="/">
             <div className="flex items-center gap-3 text-white mb-12 cursor-pointer">
                 <Shield size={32} strokeWidth={2.5} className="text-[#22c55e]" />
@@ -69,7 +117,6 @@ export default function SignupPage() {
             </div>
           </Link>
 
-          {/* Main Text */}
           <div className="mt-auto mb-12">
             <h1 className="text-4xl xl:text-6xl font-bold text-white mb-6 leading-[1.1]">
               Start selling with <br /> <span className="text-[#22c55e]">confidence</span>
@@ -78,7 +125,6 @@ export default function SignupPage() {
               Join thousands of vendors across Africa using our escrow-protected payment infrastructure.
             </p>
 
-            {/* Feature List */}
             <div className="space-y-8">
               {[
                 { 
@@ -117,7 +163,6 @@ export default function SignupPage() {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 overflow-y-auto">
         <div className="w-full max-w-lg">
           
-          {/* Mobile Logo (Only visible on small screens) */}
           <div className="lg:hidden flex items-center gap-2 text-[#152570] mb-8">
             <Shield size={28} strokeWidth={2.5} className="text-[#152570]" />
             <span className="text-xl font-bold tracking-tight">Vendor Ventory</span>
@@ -141,7 +186,7 @@ export default function SignupPage() {
             <div className="flex-grow border-t border-slate-200"></div>
           </div>
 
-          <form className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5">
             
             {/* Business Name */}
             <div className="space-y-1.5">
@@ -149,9 +194,14 @@ export default function SignupPage() {
               <div className="relative group">
                 <Store className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#152570] transition-colors" size={20} />
                 <input 
+                  name="name"
                   type="text" 
+                  value={formData.name}
+                  onChange={handleChange}
+                  disabled={isPending}
                   placeholder="e.g. Lagos Fashion Hub"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 pl-12 pr-4 text-[#152570] placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#152570]/20 focus:border-[#152570] transition-all"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 pl-12 pr-4 text-[#152570] placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#152570]/20 focus:border-[#152570] transition-all disabled:opacity-50"
+                  required
                 />
               </div>
             </div>
@@ -162,9 +212,14 @@ export default function SignupPage() {
               <div className="relative group">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#152570] transition-colors" size={20} />
                 <input 
+                  name="email"
                   type="email" 
+                  value={formData.email}
+                  onChange={handleChange}
+                  disabled={isPending}
                   placeholder="vendor@example.com"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 pl-12 pr-4 text-[#152570] placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#152570]/20 focus:border-[#152570] transition-all"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 pl-12 pr-4 text-[#152570] placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#152570]/20 focus:border-[#152570] transition-all disabled:opacity-50"
+                  required
                 />
               </div>
             </div>
@@ -175,9 +230,14 @@ export default function SignupPage() {
               <div className="relative group">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#152570] transition-colors" size={20} />
                 <input 
+                  name="password"
                   type={showPassword ? "text" : "password"} 
+                  value={formData.password}
+                  onChange={handleChange}
+                  disabled={isPending}
                   placeholder="Min. 8 characters"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 pl-12 pr-12 text-[#152570] placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#152570]/20 focus:border-[#152570] transition-all"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 pl-12 pr-12 text-[#152570] placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#152570]/20 focus:border-[#152570] transition-all disabled:opacity-50"
+                  required
                 />
                 <button 
                   type="button"
@@ -195,9 +255,14 @@ export default function SignupPage() {
               <div className="relative group">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#152570] transition-colors" size={20} />
                 <input 
+                  name="confirmPassword"
                   type={showConfirmPassword ? "text" : "password"} 
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  disabled={isPending}
                   placeholder="Re-enter password"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 pl-12 pr-12 text-[#152570] placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#152570]/20 focus:border-[#152570] transition-all"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 pl-12 pr-12 text-[#152570] placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#152570]/20 focus:border-[#152570] transition-all disabled:opacity-50"
+                  required
                 />
                 <button 
                   type="button"
@@ -209,9 +274,26 @@ export default function SignupPage() {
               </div>
             </div>
 
+            {/* Error / Success Messages */}
+            {error && (
+              <div className="p-3 bg-red-50 text-red-500 rounded-xl text-sm flex items-center gap-2 border border-red-100">
+                <AlertCircle size={16} /> {error}
+              </div>
+            )}
+            {success && (
+              <div className="p-3 bg-green-50 text-green-600 rounded-xl text-sm flex items-center gap-2 border border-green-100">
+                <CheckCircle2 size={16} /> {success}
+              </div>
+            )}
+
             {/* Submit Button */}
-            <button className="w-full bg-[#22c55e] hover:bg-green-500 text-white font-bold h-14 rounded-xl shadow-lg shadow-green-500/20 transition-all hover:scale-[1.01] active:scale-[0.98] mt-4 flex items-center justify-center gap-2 group">
-              Create Vendor Account <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+            <button 
+              type="submit"
+              disabled={isPending}
+              className="w-full bg-[#22c55e] hover:bg-green-500 text-white font-bold h-14 rounded-xl shadow-lg shadow-green-500/20 transition-all hover:scale-[1.01] active:scale-[0.98] mt-4 flex items-center justify-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {isPending ? "Creating Account..." : "Create Vendor Account"} 
+              {!isPending && <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />}
             </button>
 
             {/* Footer Links */}

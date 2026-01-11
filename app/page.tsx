@@ -6,12 +6,12 @@ import Image from 'next/image';
 import { 
   ShieldCheck, AlertTriangle, Wallet, Truck, CheckCircle2, Lock, 
   Menu, ArrowRight, Shield, Check, X, Box, 
-  Receipt, Zap, Sparkles, Fingerprint, Twitter, Linkedin, Facebook,
+  Receipt, Zap, Sparkles, Fingerprint, Linkedin, Facebook,
   CreditCard, UserX, PackageSearch, Gavel, Smartphone, Globe2,
-  Eye, Target, Compass
+  Eye, Target, Compass, Mail, Phone, Plus, Minus, Instagram
 } from 'lucide-react';
 import { Arimo } from 'next/font/google';
-import { motion, AnimatePresence, Variants } from 'framer-motion'; // Added Variants to import
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 // Configuring the Arimo font
 const arimo = Arimo({ 
@@ -21,7 +21,20 @@ const arimo = Arimo({
   display: 'swap',
 });
 
-// --- Animation Variants (Typed to fix build error) ---
+// --- Custom Icons for Brands not in Lucide (or specific versions) ---
+const XLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" aria-hidden="true" className={className} fill="currentColor">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
+const TikTokLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" aria-hidden="true" className={className} fill="currentColor">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+  </svg>
+);
+
+// --- Animation Variants ---
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: { 
@@ -112,10 +125,61 @@ const SectionHeader = ({ badge, title, subtitle, align = 'center', light = false
   </motion.div>
 );
 
+const FaqItem = ({ question, answer, isOpen, onClick }: any) => (
+  <div className="border-b border-slate-100 last:border-0">
+    <button 
+      onClick={onClick}
+      className="w-full py-6 flex items-center justify-between gap-4 text-left focus:outline-none group"
+    >
+      <span className={`text-lg font-bold transition-colors ${isOpen ? 'text-[#152570]' : 'text-slate-700 group-hover:text-[#152570]'}`}>
+        {question}
+      </span>
+      <span className={`shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+        {isOpen ? <Minus size={20} className="text-[#22c55e]" /> : <Plus size={20} className="text-slate-400" />}
+      </span>
+    </button>
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: "auto", opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="overflow-hidden"
+        >
+          <p className="pb-6 text-slate-500 leading-relaxed">
+            {answer}
+          </p>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  </div>
+);
+
 export default function LandingPage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+
+  const faqs = [
+    {
+      q: "Is VendorVentory free to use?",
+      a: "Yes! Signing up and listing your products or services is completely free. We only charge a small transaction fee (1.5%) when you successfully make a sale."
+    },
+    {
+      q: "How does the payment protection work?",
+      a: "When a buyer pays, the funds are held in a secure escrow vault. The money is only released to the vendor after the buyer confirms they have received the correct item."
+    },
+    {
+      q: "How long do payouts take?",
+      a: "Once a transaction is completed and confirmed by the buyer, funds are instantly moved to your wallet. Withdrawal to your local bank account typically takes 5-10 minutes."
+    },
+    {
+      q: "Can I use this for services, or just physical products?",
+      a: "Absolutely! VendorVentory is perfect for freelancers, consultants, and service providers. The 'delivery' is confirmed when the client approves the work."
+    }
+  ];
 
   // Simulate loading
   useEffect(() => {
@@ -139,7 +203,7 @@ export default function LandingPage() {
     { name: 'How It Works', id: 'how-it-works' },
     { name: "Who It's For", id: 'who-its-for' },
     { name: 'Features', id: 'features' },
-    { name: 'Security', id: 'security' },
+    { name: 'FAQ', id: 'faq' },
   ];
 
   return (
@@ -285,7 +349,7 @@ export default function LandingPage() {
                 </motion.h1>
                 
                 <motion.p variants={fadeInUp} className="text-base md:text-xl text-slate-500 leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium px-2 lg:px-0">
-                  Eliminate scams with our secure escrow system. Funds are held safely until delivery is verified. Experience worry-free social commerce.
+                  Payments are held securely until both buyer and Vendor confirm delivery. No more payment fears. No scams. No stress. Just safe transactions across Africa.
                 </motion.p>
                 
                 <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 pt-2 md:pt-4 justify-center lg:justify-start w-full sm:w-auto">
@@ -353,7 +417,7 @@ export default function LandingPage() {
                       </div>
                       <div>
                           <div className="text-[10px] md:text-xs uppercase font-bold text-slate-400">Payment Status</div>
-                          <div className="text-xs md:text-sm font-bold text-[#152570]">Escrow Secured</div>
+                          <div className="text-xs md:text-sm font-bold text-[#152570]">Secure and Protected</div>
                       </div>
                    </motion.div>
 
@@ -382,83 +446,6 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* --- Vision, Mission, Purpose Section --- */}
-        <section className="py-16 md:py-24 bg-white relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            {/* Header */}
-            <SectionHeader 
-              badge="About VendorVentory"
-              title="Africa's E-Commerce Trust Infrastructure"
-              subtitle="We're building the foundation of trust that will power the next generation of African commerce"
-            />
-
-            {/* Cards Grid */}
-            <motion.div 
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
-            >
-              {/* Vision */}
-              <motion.div variants={fadeInUp} className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm relative overflow-hidden group hover:shadow-lg transition-all">
-                <div className="absolute -bottom-4 -right-4 text-slate-50 group-hover:text-blue-50 transition-colors pointer-events-none">
-                    <Eye size={120} strokeWidth={1} /> 
-                </div>
-                <div className="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center text-white mb-6 relative z-10">
-                  <Eye size={28} />
-                </div>
-                <h3 className="text-2xl font-bold text-[#152570] mb-4 relative z-10">Vision</h3>
-                <p className="text-slate-500 leading-relaxed relative z-10">To become Africa's most trusted infrastructure for safe and transparent online commerce.</p>
-              </motion.div>
-
-              {/* Mission */}
-              <motion.div variants={fadeInUp} className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm relative overflow-hidden group hover:shadow-lg transition-all">
-                 <div className="absolute -bottom-4 -right-4 text-slate-50 group-hover:text-green-50 transition-colors pointer-events-none">
-                    <Target size={120} strokeWidth={1} /> 
-                </div>
-                <div className="w-14 h-14 bg-[#22c55e] rounded-xl flex items-center justify-center text-white mb-6 relative z-10">
-                  <Target size={28} />
-                </div>
-                <h3 className="text-2xl font-bold text-[#152570] mb-4 relative z-10">Mission</h3>
-                <p className="text-slate-500 leading-relaxed relative z-10">To protect buyers, empower vendors, and eliminate fraud through escrow payments, delivery verification, and structural digital transactions.</p>
-              </motion.div>
-
-              {/* Purpose */}
-              <motion.div variants={fadeInUp} className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm relative overflow-hidden group hover:shadow-lg transition-all">
-                 <div className="absolute -bottom-4 -right-4 text-slate-50 group-hover:text-purple-50 transition-colors pointer-events-none">
-                    <Compass size={120} strokeWidth={1} /> 
-                </div>
-                <div className="w-14 h-14 bg-purple-600 rounded-xl flex items-center justify-center text-white mb-6 relative z-10">
-                  <Compass size={28} />
-                </div>
-                <h3 className="text-2xl font-bold text-[#152570] mb-4 relative z-10">Purpose</h3>
-                <p className="text-slate-500 leading-relaxed relative z-10">To replace informal, risky online transactions with a system built on trust, proof, and accountability.</p>
-              </motion.div>
-            </motion.div>
-
-            {/* Bottom Banner */}
-            <motion.div 
-              variants={scaleIn}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="bg-[#152570] rounded-3xl p-8 md:p-12 text-center text-white shadow-xl relative overflow-hidden"
-            >
-              {/* Background decoration */}
-              <div className="absolute top-0 right-0 p-32 bg-blue-500 rounded-full blur-3xl opacity-10 -translate-y-1/2 translate-x-1/2"></div>
-              
-              <div className="relative z-10 max-w-3xl mx-auto">
-                <h3 className="text-2xl md:text-3xl font-bold mb-6">Trust Isn't Optional — It's Essential</h3>
-                <p className="text-blue-100 text-lg leading-relaxed">
-                  Every day, billions of naira change hands through informal online channels. We're here to make those transactions safer, clearer, and more accountable for everyone involved.
-                </p>
-              </div>
-            </motion.div>
-
-          </div>
-        </section>
 
         {/* --- Problem Section --- */}
         <section id="features" className="py-16 md:py-24 bg-slate-50 relative">
@@ -551,7 +538,7 @@ export default function LandingPage() {
                   >
                       {[
                           { step: "01", title: "Invoice", desc: "Vendor creates a digital invoice detailing the item.", icon: <Receipt size={24} />, bg: "bg-white", border: "border-[#152570]" },
-                          { step: "02", title: "Escrow", desc: "Buyer pays securely. Funds locked until delivery.", icon: <Lock size={24} />, bg: "bg-white", border: "border-blue-500" },
+                          { step: "02", title: "Payment", desc: "Buyer pays securely. Funds locked until delivery.", icon: <Lock size={24} />, bg: "bg-white", border: "border-blue-500" },
                           { step: "03", title: "Delivery", desc: "Logistics partner picks up and delivers item.", icon: <Truck size={24} />, bg: "bg-white", border: "border-blue-400" },
                           { step: "04", title: "Release", desc: "Buyer confirms. Funds released instantly.", icon: <Sparkles size={24} />, bg: "bg-[#22c55e]", border: "border-[#22c55e]", text: "text-white" }
                       ].map((item, idx) => (
@@ -680,7 +667,7 @@ export default function LandingPage() {
                         
                         <div className="space-y-6">
                           {[
-                              { title: "Escrow Protection", desc: "Funds held in regulated trust accounts." },
+                              { title: "Secure Payment Protection", desc: "Funds held in regulated trust accounts." },
                               { title: "KYC/KYB Verification", desc: "We verify the identity of every vendor." },
                               { title: "Dispute Arbitration", desc: "Fair mediation team on standby 24/7." }
                           ].map((item, i) => (
@@ -742,6 +729,34 @@ export default function LandingPage() {
                       </motion.div>
                   </motion.div>
               </div>
+          </div>
+        </section>
+
+        {/* --- FAQ Section --- */}
+        <section id="faq" className="py-16 md:py-24 bg-white">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionHeader 
+              badge="FAQ"
+              title="Frequently Asked Questions"
+              subtitle="Everything you need to know about VendorVentory."
+            />
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mt-12 space-y-2"
+            >
+              {faqs.map((faq, index) => (
+                <FaqItem 
+                  key={index}
+                  question={faq.q}
+                  answer={faq.a}
+                  isOpen={openFaqIndex === index}
+                  onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
+                />
+              ))}
+            </motion.div>
           </div>
         </section>
 
@@ -817,14 +832,42 @@ export default function LandingPage() {
                         </div>
                       </div>
                      <p className="text-[#4A5565] text-sm leading-relaxed mb-6">
-                         The most trusted escrow-based e-commerce platform protecting buyers and vendors across Africa.
+                         Secure payment platform protecting buyers and vendors across Africa.
                      </p>
+                     
+                     {/* Contact Info */}
+                     <div className="mb-6 space-y-3">
+                      <a href="mailto:hello@vendorventory.com" className="flex items-center gap-3 text-sm text-[#4A5565] hover:text-[#152570] transition-colors">
+                           <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-[#152570]">
+                              <Mail size={14} />
+                           </div>
+                           support@vendorventory.com
+                        </a>
+                        <a href="mailto:hello@vendorventory.com" className="flex items-center gap-3 text-sm text-[#4A5565] hover:text-[#152570] transition-colors">
+                           <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-[#152570]">
+                              <Mail size={14} />
+                           </div>
+                           customercare@vendorventory.com
+                        </a>
+                        <a href="tel:+2348000000000" className="flex items-center gap-3 text-sm text-[#4A5565] hover:text-[#152570] transition-colors">
+                           <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-[#152570]">
+                              <Phone size={14} />
+                           </div>
+                           +234 708 907 7668
+                        </a>
+                     </div>
+
+                     {/* Socials */}
                      <div className="flex gap-4">
-                         {[Twitter, Linkedin, Facebook].map((Icon, i) => (
-                             <a key={i} href="#" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-[#152570] hover:text-white transition-colors">
-                                 <Icon size={18} fill="currentColor" strokeWidth={0} />
-                             </a>
-                         ))}
+                         <a href="#" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-black hover:text-white transition-colors" aria-label="X (Twitter)">
+                             <XLogo className="w-4 h-4" />
+                         </a>
+                         <a href="#" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-[#E1306C] hover:text-white transition-colors" aria-label="Instagram">
+                             <Instagram size={18} />
+                         </a>
+                         <a href="#" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-black hover:text-white transition-colors" aria-label="TikTok">
+                             <TikTokLogo className="w-4 h-4" />
+                         </a>
                      </div>
                  </div>
 
