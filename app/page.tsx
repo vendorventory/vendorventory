@@ -169,11 +169,11 @@ export default function LandingPage() {
     },
     {
       q: "How does the payment protection work?",
-      a: "When a buyer pays, the funds are held in a secure escrow vault. The money is only released to the vendor after the buyer confirms they have received the correct item."
+      a: "When a buyer pays, the funds are held securely in vendor ventory. The money is only released to the vendor after the buyer confirms they have received the correct item."
     },
     {
       q: "How long do payouts take?",
-      a: "Once a transaction is completed and confirmed by the buyer, funds are instantly moved to your wallet. Withdrawal to your local bank account typically takes 5-10 minutes."
+      a: "Once a transaction is completed and confirmed by the buyer, funds are instantly moved to your local bank account. Withdrawal to your local bank account typically takes 5-10 minutes."
     },
     {
       q: "Can I use this for services, or just physical products?",
