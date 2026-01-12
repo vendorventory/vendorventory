@@ -395,7 +395,7 @@ export default function LandingPage() {
                       className="relative z-10"
                    >
                        <Image 
-                         src="/images/mockup.png" 
+                         src="/images/mockup-phone.png" 
                          alt="VendorVentory App" 
                          width={420}
                          height={840}
