@@ -114,7 +114,7 @@ export default function SignupPage() {
              {/* UPDATED: Replaced Icon+Text with local logo image */}
             <div className="mb-12 cursor-pointer">
               <Image 
-                src="/images/logo.png" 
+                src="/images/logo-white.png" 
                 alt="Vendor Ventory" 
                 width={200} 
                 height={60} 

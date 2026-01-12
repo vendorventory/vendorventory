@@ -93,7 +93,7 @@ export default function LoginPage() {
             {/* UPDATED: Desktop Logo */}
             <div className="mb-12 cursor-pointer">
               <Image 
-                src="/images/logo.png" 
+                src="/images/logo-white.png" 
                 alt="Vendor Ventory" 
                 width={200} 
                 height={60} 
