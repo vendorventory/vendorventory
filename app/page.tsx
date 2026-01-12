@@ -165,7 +165,7 @@ export default function LandingPage() {
   const faqs = [
     {
       q: "Is VendorVentory free to use?",
-      a: "Yes! Signing up and listing your products or services is completely free for the vendor. We only charge a small transaction fee (0.75%) when buyers successfully make payment."
+      a: "Yes! Signing up and listing your products or services is completely free for the vendor. We only charge the buyer a small transaction fee (0.75%) when buyers successfully make payment."
     },
     {
       q: "How does the payment protection work?",
