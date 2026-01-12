@@ -173,7 +173,7 @@ export default function LandingPage() {
     },
     {
       q: "How long do payouts take?",
-      a: "Once a transaction is completed and confirmed by the buyer, funds are instantly moved to your local bank account. Withdrawal to your local bank account typically takes 2-3 minutes."
+      a: "Once a transaction is completed and confirmed by the buyer, funds are instantly moved to vendor's local bank account. Withdrawal to your local bank account typically takes 2-3 minutes."
     },
     {
       q: "Can I use this for services, or just physical products?",
@@ -219,7 +219,6 @@ export default function LandingPage() {
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.5 }}
-            // UPDATED: Forced bg-white when menu is open, and split padding logic to maintain position
             className={`fixed top-0 w-full z-50 transition-all duration-300 
               ${isMobileMenuOpen 
                 ? 'bg-white' 
@@ -293,7 +292,6 @@ export default function LandingPage() {
             </div>
 
             {/* Mobile Menu Overlay */}
-            {/* UPDATED: Added overflow-y-auto to handle small screens safely */}
             <div className={`fixed inset-0 bg-white z-40 transition-transform duration-300 lg:hidden flex flex-col pt-28 px-6 overflow-y-auto ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
                 <div className="flex flex-col gap-6 text-2xl font-bold text-[#152570]">
                   {navLinks.map((item) => (
@@ -868,8 +866,16 @@ export default function LandingPage() {
                          <a href="#" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-black hover:text-white transition-colors" aria-label="X (Twitter)">
                              <XLogo className="w-4 h-4" />
                          </a>
+                         {/* Facebook */}
+                         <a href="#" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-[#1877F2] hover:text-white transition-colors" aria-label="Facebook">
+                             <Facebook size={18} />
+                         </a>
                          <a href="#" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-[#E1306C] hover:text-white transition-colors" aria-label="Instagram">
                              <Instagram size={18} />
+                         </a>
+                         {/* LinkedIn */}
+                         <a href="#" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-[#0077b5] hover:text-white transition-colors" aria-label="LinkedIn">
+                             <Linkedin size={18} />
                          </a>
                          <a href="#" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-black hover:text-white transition-colors" aria-label="TikTok">
                              <TikTokLogo className="w-4 h-4" />
