@@ -219,11 +219,16 @@ export default function LandingPage() {
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.5 }}
+            // UPDATED: Forced bg-white when menu is open, and split padding logic to maintain position
             className={`fixed top-0 w-full z-50 transition-all duration-300 
-              ${scrolled 
-                ? 'bg-white/90 backdrop-blur-md shadow-sm py-3 border-b border-slate-100' 
-                : 'bg-transparent py-4 md:py-6'
-              }`}
+              ${isMobileMenuOpen 
+                ? 'bg-white' 
+                : scrolled 
+                  ? 'bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-100' 
+                  : 'bg-transparent'
+              }
+              ${scrolled ? 'py-3' : 'py-4 md:py-6'}
+            `}
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex justify-between items-center"> 
@@ -281,14 +286,15 @@ export default function LandingPage() {
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
                     className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
                   >
-                     {isMobileMenuOpen ? <X className="w-7 h-7 text-[#152570]"/> : <Menu className="w-7 h-7 text-[#152570]" />}
+                      {isMobileMenuOpen ? <X className="w-7 h-7 text-[#152570]"/> : <Menu className="w-7 h-7 text-[#152570]" />}
                   </button>
                 </div>
               </div>
             </div>
 
             {/* Mobile Menu Overlay */}
-            <div className={`fixed inset-0 bg-white z-40 transition-transform duration-300 lg:hidden flex flex-col pt-28 px-6 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+            {/* UPDATED: Added overflow-y-auto to handle small screens safely */}
+            <div className={`fixed inset-0 bg-white z-40 transition-transform duration-300 lg:hidden flex flex-col pt-28 px-6 overflow-y-auto ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
                 <div className="flex flex-col gap-6 text-2xl font-bold text-[#152570]">
                   {navLinks.map((item) => (
                       <a 
