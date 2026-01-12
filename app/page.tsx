@@ -537,10 +537,10 @@ export default function LandingPage() {
                       className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
                   >
                       {[
-                          { step: "01", title: "Invoice", desc: "Vendor creates a digital invoice detailing the item.", icon: <Receipt size={24} />, bg: "bg-white", border: "border-[#152570]" },
-                          { step: "02", title: "Payment", desc: "Buyer pays securely. Funds locked until delivery.", icon: <Lock size={24} />, bg: "bg-white", border: "border-blue-500" },
-                          { step: "03", title: "Delivery", desc: "Logistics partner picks up and delivers item.", icon: <Truck size={24} />, bg: "bg-white", border: "border-blue-400" },
-                          { step: "04", title: "Release", desc: "Buyer confirms. Funds released instantly.", icon: <Sparkles size={24} />, bg: "bg-[#22c55e]", border: "border-[#22c55e]", text: "text-white" }
+                          { step: "01", title: "Invoice", desc: "Vendor creates a digital invoice detailing the item with price, and sends the product list to the buyer for payment.", icon: <Receipt size={24} />, bg: "bg-white", border: "border-[#152570]" },
+                          { step: "02", title: "Payment", desc: "Buyer pays securely through Vendor Ventory. Funds are held by Vendor Ventory until delivery is confirmed by the buyer.", icon: <Lock size={24} />, bg: "bg-white", border: "border-blue-500" },
+                          { step: "03", title: "Delivery", desc: "Logistics partner picks up and delivers item to buyer.", icon: <Truck size={24} />, bg: "bg-white", border: "border-blue-400" },
+                          { step: "04", title: "Release", desc: "Buyer confirms. Funds are released to vendor's bank account instantly, once product is confirmed by the buyer.", icon: <Sparkles size={24} />, bg: "bg-[#22c55e]", border: "border-[#22c55e]", text: "text-white" }
                       ].map((item, idx) => (
                           <motion.div key={idx} variants={fadeInUp} className="relative group flex md:block items-start gap-4 md:gap-0">
                               {/* Step Bubble */}
