@@ -173,7 +173,7 @@ export default function LandingPage() {
     },
     {
       q: "How long do payouts take?",
-      a: "Once a transaction is completed and confirmed by the buyer, funds are instantly moved to your local bank account. Withdrawal to your local bank account typically takes 5-10 minutes."
+      a: "Once a transaction is completed and confirmed by the buyer, funds are instantly moved to your local bank account. Withdrawal to your local bank account typically takes 2-3 minutes."
     },
     {
       q: "Can I use this for services, or just physical products?",
