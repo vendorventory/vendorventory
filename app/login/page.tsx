@@ -89,10 +89,22 @@ export default function LoginPage() {
           <Image src="/images/vendors.jpg" alt="Vendor Background" fill className="object-cover opacity-60 mix-blend-overlay" priority />
         </div>
         <div className="relative z-20 h-full flex flex-col">
-          <Link href="/"><div className="flex items-center gap-3 text-white mb-12 cursor-pointer"><Shield size={32} strokeWidth={2.5} className="text-[#22c55e]" /><span className="text-2xl font-bold tracking-tight">Vendor Ventory</span></div></Link>
+          <Link href="/">
+            {/* UPDATED: Desktop Logo */}
+            <div className="mb-12 cursor-pointer">
+              <Image 
+                src="/images/logo.png" 
+                alt="Vendor Ventory" 
+                width={200} 
+                height={60} 
+                className="h-14 w-auto object-contain"
+                priority
+              />
+            </div>
+          </Link>
           <div className="mt-auto mb-12">
             <h1 className="text-4xl xl:text-6xl font-bold text-white mb-6 leading-[1.1]">Welcome back to your <br /> <span className="text-[#22c55e]">dashboard</span></h1>
-            <p className="text-blue-100 text-lg mb-12 max-w-md font-light leading-relaxed">Log in to manage your orders, track escrow payments, and verify deliveries.</p>
+            <p className="text-blue-100 text-lg mb-12 max-w-md font-light leading-relaxed">Log in to manage your orders, track payments, and verify deliveries.</p>
             <div className="space-y-8">
               {[
                 { icon: <ShieldCheck className="text-white" size={24} />, title: "Secure Transactions", desc: "Your data and funds are always protected." },
@@ -113,9 +125,18 @@ export default function LoginPage() {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 overflow-y-auto">
         <div className="w-full max-w-lg">
           
-          <div className="lg:hidden flex items-center gap-2 text-[#152570] mb-8">
-            <Shield size={28} strokeWidth={2.5} className="text-[#152570]" />
-            <span className="text-xl font-bold tracking-tight">Vendor Ventory</span>
+          {/* UPDATED: Mobile Logo */}
+          <div className="lg:hidden mb-8">
+            <Link href="/">
+              <Image 
+                src="/images/logo.png" 
+                alt="Vendor Ventory" 
+                width={160} 
+                height={48} 
+                className="h-10 w-auto object-contain"
+                priority
+              />
+            </Link>
           </div>
 
           <div className="mb-8">

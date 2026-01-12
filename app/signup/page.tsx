@@ -4,7 +4,7 @@ import React, { useState, useTransition } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { register } from "@/actions/register"; // Import the server action
+import { register } from "@/actions/register"; 
 import { 
   ShieldCheck, 
   Store, 
@@ -111,9 +111,16 @@ export default function SignupPage() {
         {/* Content Layer */}
         <div className="relative z-20 h-full flex flex-col">
           <Link href="/">
-            <div className="flex items-center gap-3 text-white mb-12 cursor-pointer">
-                <Shield size={32} strokeWidth={2.5} className="text-[#22c55e]" />
-                <span className="text-2xl font-bold tracking-tight">Vendor Ventory</span>
+             {/* UPDATED: Replaced Icon+Text with local logo image */}
+            <div className="mb-12 cursor-pointer">
+              <Image 
+                src="/images/logo.png" 
+                alt="Vendor Ventory" 
+                width={200} 
+                height={60} 
+                className="h-14 w-auto object-contain"
+                priority
+              />
             </div>
           </Link>
 
@@ -122,14 +129,14 @@ export default function SignupPage() {
               Start selling with <br /> <span className="text-[#22c55e]">confidence</span>
             </h1>
             <p className="text-blue-100 text-lg mb-12 max-w-md font-light leading-relaxed">
-              Join thousands of vendors across Africa using our escrow-protected payment infrastructure.
+              Join thousands of vendors across Africa using our protected payment infrastructure.
             </p>
 
             <div className="space-y-8">
               {[
                 { 
                   icon: <ShieldCheck className="text-white" size={24} />, 
-                  title: "Secure Escrow", 
+                  title: "Secure Payments", 
                   desc: "Funds protected until delivery." 
                 },
                 { 
@@ -163,9 +170,17 @@ export default function SignupPage() {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 overflow-y-auto">
         <div className="w-full max-w-lg">
           
-          <div className="lg:hidden flex items-center gap-2 text-[#152570] mb-8">
-            <Shield size={28} strokeWidth={2.5} className="text-[#152570]" />
-            <span className="text-xl font-bold tracking-tight">Vendor Ventory</span>
+          {/* UPDATED: Mobile Logo - Replaced Icon+Text with local logo image */}
+          <div className="lg:hidden mb-8">
+            <Link href="/">
+              <Image 
+                src="/images/logo.png" 
+                alt="Vendor Ventory" 
+                width={160} 
+                height={48} 
+                className="h-10 w-auto object-contain"
+              />
+            </Link>
           </div>
 
           <div className="mb-8">
