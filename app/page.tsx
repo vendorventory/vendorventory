@@ -78,19 +78,19 @@ const LoadingSkeleton = () => (
       <div className="flex justify-between items-center">
          <div className="h-10 w-32 bg-slate-200 rounded-lg"></div>
          <div className="hidden md:flex gap-4">
-            <div className="h-4 w-20 bg-slate-200 rounded"></div>
-            <div className="h-4 w-20 bg-slate-200 rounded"></div>
+           <div className="h-4 w-20 bg-slate-200 rounded"></div>
+           <div className="h-4 w-20 bg-slate-200 rounded"></div>
          </div>
       </div>
       <div className="grid md:grid-cols-2 gap-12 pt-20">
          <div className="space-y-6">
-            <div className="h-16 w-3/4 bg-slate-200 rounded-xl"></div>
-            <div className="h-6 w-full bg-slate-200 rounded-lg"></div>
-            <div className="h-6 w-5/6 bg-slate-200 rounded-lg"></div>
-            <div className="flex gap-4 pt-4">
-              <div className="h-14 w-40 bg-slate-200 rounded-xl"></div>
-              <div className="h-14 w-32 bg-slate-200 rounded-xl"></div>
-            </div>
+           <div className="h-16 w-3/4 bg-slate-200 rounded-xl"></div>
+           <div className="h-6 w-full bg-slate-200 rounded-lg"></div>
+           <div className="h-6 w-5/6 bg-slate-200 rounded-lg"></div>
+           <div className="flex gap-4 pt-4">
+             <div className="h-14 w-40 bg-slate-200 rounded-xl"></div>
+             <div className="h-14 w-32 bg-slate-200 rounded-xl"></div>
+           </div>
          </div>
          <div className="hidden md:block h-[500px] bg-slate-200 rounded-[32px]"></div>
       </div>
@@ -285,7 +285,7 @@ export default function LandingPage() {
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
                     className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
                   >
-                      {isMobileMenuOpen ? <X className="w-7 h-7 text-[#152570]"/> : <Menu className="w-7 h-7 text-[#152570]" />}
+                    {isMobileMenuOpen ? <X className="w-7 h-7 text-[#152570]"/> : <Menu className="w-7 h-7 text-[#152570]" />}
                   </button>
                 </div>
               </div>
@@ -819,10 +819,10 @@ export default function LandingPage() {
         <footer className="bg-white border-t border-slate-100 pt-16 md:pt-20 pb-10 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
               <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-10 lg:gap-8 mb-16">
-                 
-                 {/* Brand Column */}
-                 <div className="lg:col-span-2 pr-8">
-                     <div 
+                  
+                  {/* Brand Column */}
+                  <div className="lg:col-span-2 pr-8">
+                      <div 
                         className="flex items-center relative cursor-pointer mb-6"
                         onClick={(e) => scrollToSection(e, 'home')}
                       >
@@ -835,13 +835,13 @@ export default function LandingPage() {
                           />
                         </div>
                       </div>
-                     <p className="text-[#4A5565] text-sm leading-relaxed mb-6">
-                         Secure payment platform protecting buyers and vendors across Africa.
-                     </p>
-                     
-                     {/* Contact Info */}
-                     <div className="mb-6 space-y-3">
-                      <a href="mailto:hello@vendorventory.com" className="flex items-center gap-3 text-sm text-[#4A5565] hover:text-[#152570] transition-colors">
+                      <p className="text-[#4A5565] text-sm leading-relaxed mb-6">
+                          Secure payment platform protecting buyers and vendors across Africa.
+                      </p>
+                      
+                      {/* Contact Info */}
+                      <div className="mb-6 space-y-3">
+                       <a href="mailto:hello@vendorventory.com" className="flex items-center gap-3 text-sm text-[#4A5565] hover:text-[#152570] transition-colors">
                            <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-[#152570]">
                               <Mail size={14} />
                            </div>
@@ -859,46 +859,46 @@ export default function LandingPage() {
                            </div>
                            +234 708 907 7668
                         </a>
-                     </div>
+                      </div>
 
-                     {/* Socials */}
-                     <div className="flex gap-4">
-                         <a href="#" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-black hover:text-white transition-colors" aria-label="X (Twitter)">
-                             <XLogo className="w-4 h-4" />
-                         </a>
-                         {/* Facebook */}
-                         <a href="#" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-[#1877F2] hover:text-white transition-colors" aria-label="Facebook">
-                             <Facebook size={18} />
-                         </a>
-                         <a href="#" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-[#E1306C] hover:text-white transition-colors" aria-label="Instagram">
-                             <Instagram size={18} />
-                         </a>
-                         {/* LinkedIn */}
-                         <a href="#" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-[#0077b5] hover:text-white transition-colors" aria-label="LinkedIn">
-                             <Linkedin size={18} />
-                         </a>
-                         <a href="#" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-black hover:text-white transition-colors" aria-label="TikTok">
-                             <TikTokLogo className="w-4 h-4" />
-                         </a>
-                     </div>
-                 </div>
+                      {/* Socials */}
+                      <div className="flex gap-4">
+                          <a href="https://x.com/vendorventory" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-black hover:text-white transition-colors" aria-label="X (Twitter)">
+                              <XLogo className="w-4 h-4" />
+                          </a>
+                          {/* Facebook */}
+                          <a href="https://web.facebook.com/vendorventory" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-[#1877F2] hover:text-white transition-colors" aria-label="Facebook">
+                              <Facebook size={18} />
+                          </a>
+                          <a href="https://www.instagram.com/vendorventory/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-[#E1306C] hover:text-white transition-colors" aria-label="Instagram">
+                              <Instagram size={18} />
+                          </a>
+                          {/* LinkedIn */}
+                          <a href="https://www.linkedin.com/company/vendor-ventory" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-[#0077b5] hover:text-white transition-colors" aria-label="LinkedIn">
+                              <Linkedin size={18} />
+                          </a>
+                          <a href="https://www.tiktok.com/@vendorventory" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-[#152570] hover:bg-black hover:text-white transition-colors" aria-label="TikTok">
+                              <TikTokLogo className="w-4 h-4" />
+                          </a>
+                      </div>
+                  </div>
 
-                 {/* Links Columns */}
-                 {[
-                     { title: "Product", links: ["How It Works", "Features", "Pricing", "Security"] },
-                     { title: "Company", links: ["About Us", "Careers", "Blog", "Contact"] },
-                     { title: "Resources", links: ["Help Center", "API Docs", "Status", "Community"] },
-                     { title: "Legal", links: ["Terms", "Privacy", "Cookies", "Licenses"] }
-                 ].map((col, idx) => (
-                     <div key={idx}>
-                         <h4 className="text-[#152570] font-bold mb-6">{col.title}</h4>
-                         <ul className="space-y-3 text-sm text-[#4A5565]">
-                             {col.links.map((link) => (
-                                 <li key={link}><a href="#" className="hover:text-[#152570] hover:underline transition">{link}</a></li>
-                             ))}
-                         </ul>
-                     </div>
-                 ))}
+                  {/* Links Columns */}
+                  {[
+                      { title: "Product", links: ["How It Works", "Features", "Pricing", "Security"] },
+                      { title: "Company", links: ["About Us", "Careers", "Blog", "Contact"] },
+                      { title: "Resources", links: ["Help Center", "API Docs", "Status", "Community"] },
+                      { title: "Legal", links: ["Terms", "Privacy", "Cookies", "Licenses"] }
+                  ].map((col, idx) => (
+                      <div key={idx}>
+                          <h4 className="text-[#152570] font-bold mb-6">{col.title}</h4>
+                          <ul className="space-y-3 text-sm text-[#4A5565]">
+                              {col.links.map((link) => (
+                                  <li key={link}><a href="#" className="hover:text-[#152570] hover:underline transition">{link}</a></li>
+                              ))}
+                          </ul>
+                      </div>
+                  ))}
               </div>
 
               <div className="border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
