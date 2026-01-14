@@ -352,9 +352,13 @@ export default function DeliveryPartnersPage() {
                       </td>
                       <td className="px-6 py-4 text-sm font-medium text-slate-600">{partner.vendors}</td>
                       <td className="px-6 py-4 text-right">
-                        <button className="inline-flex items-center gap-2 px-4 py-1.5 border border-[#152570] text-[#152570] rounded-lg text-xs font-bold hover:bg-[#152570] hover:text-white transition-all">
+                        {/* UPDATED: Link to details page */}
+                        <Link 
+                          href={`/admin/delivery-partners/${partner.id}`}
+                          className="inline-flex items-center gap-2 px-4 py-1.5 border border-[#152570] text-[#152570] rounded-lg text-xs font-bold hover:bg-[#152570] hover:text-white transition-all"
+                        >
                           <Eye size={14} /> View Details
-                        </button>
+                        </Link>
                       </td>
                     </tr>
                   ))}
