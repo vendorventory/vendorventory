@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams } from 'next/navigation'; // Added to read the URL ID
 import { 
   LayoutDashboard, Store, Truck, Users, CreditCard, 
@@ -130,11 +131,21 @@ export default function VendorDetailsPage() {
       {/* --- Sidebar (Same as before) --- */}
       <aside className={`fixed inset-y-0 left-0 z-50 w-72 bg-[#152570] text-white transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:relative lg:translate-x-0 shadow-2xl lg:shadow-none flex flex-col`}>
         <div className="p-6 border-b border-[#1f3a8a] flex justify-between items-center">
-          <div className="flex items-center gap-2 font-bold text-xl tracking-tight">
-             <ShieldCheck className="text-[#22c55e]" size={24} />
-             Vendor Ventory
+          {/* Logo Image */}
+          <div className="relative w-40 h-10">
+             <Image 
+               src="/images/logo-white.png" 
+               alt="Vendor Ventory" 
+               fill
+               className="object-contain object-left"
+               priority
+             />
           </div>
-          <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-white/70 hover:text-white"><X size={24} /></button>
+          
+          {/* Close button for mobile */}
+          <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-white/70 hover:text-white">
+            <X size={24} />
+          </button>
         </div>
 
         <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-1">

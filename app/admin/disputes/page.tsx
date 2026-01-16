@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { 
   LayoutDashboard, Store, Truck, Users, CreditCard, 
   FileText, ShieldCheck, Settings, Bell, Search, ChevronDown, 
@@ -165,11 +166,19 @@ export default function DisputesPage() {
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
         lg:relative lg:translate-x-0 shadow-2xl lg:shadow-none flex flex-col`}
       >
-        <div className="p-6 border-b border-[#1f3a8a] flex justify-between items-center">
-          <div className="flex items-center gap-2 font-bold text-xl tracking-tight">
-             <ShieldCheck className="text-[#22c55e]" size={24} />
-             Vendor Ventory
+       <div className="p-6 border-b border-[#1f3a8a] flex justify-between items-center">
+          {/* Logo Image */}
+          <div className="relative w-40 h-10">
+             <Image 
+               src="/images/logo-white.png" 
+               alt="Vendor Ventory" 
+               fill
+               className="object-contain object-left"
+               priority
+             />
           </div>
+          
+          {/* Close button for mobile */}
           <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-white/70 hover:text-white">
             <X size={24} />
           </button>

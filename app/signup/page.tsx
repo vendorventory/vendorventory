@@ -16,7 +16,8 @@ import {
   Shield,
   ArrowRight,
   AlertCircle,
-  CheckCircle2
+  CheckCircle2,
+  Phone // Added Phone icon
 } from 'lucide-react';
 import { Arimo } from 'next/font/google';
 
@@ -51,6 +52,7 @@ export default function SignupPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phoneNumber: '', // Added phoneNumber to state
     password: '',
     confirmPassword: ''
   });
@@ -111,7 +113,6 @@ export default function SignupPage() {
         {/* Content Layer */}
         <div className="relative z-20 h-full flex flex-col">
           <Link href="/">
-             {/* UPDATED: Replaced Icon+Text with local logo image */}
             <div className="mb-12 cursor-pointer">
               <Image 
                 src="/images/logo-white.png" 
@@ -161,7 +162,7 @@ export default function SignupPage() {
           </div>
           
           <div className="text-blue-300 text-xs">
-             © 2026 VendorVentory Inc.
+              © 2026 VendorVentory Inc.
           </div>
         </div>
       </div>
@@ -170,7 +171,6 @@ export default function SignupPage() {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 overflow-y-auto">
         <div className="w-full max-w-lg">
           
-          {/* UPDATED: Mobile Logo - Replaced Icon+Text with local logo image */}
           <div className="lg:hidden mb-8">
             <Link href="/">
               <Image 
@@ -233,6 +233,24 @@ export default function SignupPage() {
                   onChange={handleChange}
                   disabled={isPending}
                   placeholder="vendor@example.com"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 pl-12 pr-4 text-[#152570] placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#152570]/20 focus:border-[#152570] transition-all disabled:opacity-50"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Phone Number - ADDED */}
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold text-[#152570] block">Phone Number</label>
+              <div className="relative group">
+                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#152570] transition-colors" size={20} />
+                <input 
+                  name="phoneNumber"
+                  type="tel" 
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  disabled={isPending}
+                  placeholder="+234 800 000 0000"
                   className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 pl-12 pr-4 text-[#152570] placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#152570]/20 focus:border-[#152570] transition-all disabled:opacity-50"
                   required
                 />

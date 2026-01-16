@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { 
   LayoutDashboard, Store, Truck, ShieldAlert, Users, CreditCard, 
@@ -82,15 +83,22 @@ export default function SuperAdminDashboard() {
         <div className="h-full flex flex-col">
           {/* Logo Area */}
           <div className="p-6 border-b border-[#1f3a8a] flex justify-between items-center">
-            <div className="flex items-center gap-2 font-bold text-xl tracking-tight">
-               <ShieldCheck className="text-[#22c55e]" size={24} />
-               Vendor Ventory
-            </div>
-            {/* Close button for mobile */}
-            <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-white/70 hover:text-white">
-              <X size={24} />
-            </button>
+          {/* Logo Image */}
+          <div className="relative w-40 h-10">
+             <Image 
+               src="/images/logo-white.png" 
+               alt="Vendor Ventory" 
+               fill
+               className="object-contain object-left"
+               priority
+             />
           </div>
+          
+          {/* Close button for mobile */}
+          <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-white/70 hover:text-white">
+            <X size={24} />
+          </button>
+        </div>
 
           {/* Navigation Links */}
           <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-1">
