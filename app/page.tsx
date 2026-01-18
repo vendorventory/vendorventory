@@ -180,6 +180,14 @@ export default function LandingPage() {
       a: "Absolutely! VendorVentory is perfect for freelancers, consultants, and service providers. The 'delivery' is confirmed when the client approves the work."
     }
   ];
+  
+  // List of logos for the moving belt
+  const partnerLogos = [
+    "LogisticsCo", "PaySafe", "MarketHub", "SwiftShip", 
+    "TradeAlly", "SecurePay", "VendorFlow", "AfriMart",
+    "LogisticsCo", "PaySafe", "MarketHub", "SwiftShip", 
+    "TradeAlly", "SecurePay", "VendorFlow", "AfriMart"
+  ];
 
   // Simulate loading
   useEffect(() => {
@@ -321,12 +329,12 @@ export default function LandingPage() {
         </AnimatePresence>
 
         {/* --- Hero Section --- */}
-        <section id="home" className="relative pt-32 pb-16 md:pt-48 md:pb-32 overflow-hidden bg-slate-50/50">
+        <section id="home" className="relative pt-32 pb-8 md:pt-48 md:pb-16 overflow-hidden bg-slate-50/50">
           {/* Background decoration */}
           <div className="absolute top-0 right-0 w-[500px] md:w-[800px] h-[500px] md:h-[800px] bg-blue-100/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-green-50/40 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3 pointer-events-none" />
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-16">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               
               <motion.div 
@@ -373,14 +381,6 @@ export default function LandingPage() {
                   >
                     View Demo
                   </motion.button>
-                </motion.div>
-
-                <motion.div variants={fadeInUp} className="flex flex-wrap items-center justify-center lg:justify-start gap-4 md:gap-6 pt-4 md:pt-6 opacity-80 grayscale hover:grayscale-0 transition-all duration-500">
-                    <p className="w-full lg:w-auto text-xs font-bold uppercase tracking-widest text-slate-400">Trusted By</p>
-                    {/* Placeholder logos using text for demo purposes */}
-                    <span className="text-slate-400 font-bold text-base md:text-lg">LogisticsCo</span>
-                    <span className="text-slate-400 font-bold text-base md:text-lg">PaySafe</span>
-                    <span className="text-slate-400 font-bold text-base md:text-lg">MarketHub</span>
                 </motion.div>
               </motion.div>
 
@@ -447,6 +447,28 @@ export default function LandingPage() {
                 </div>
               </motion.div>
             </div>
+          </div>
+
+          {/* --- Infinite Logo Belt --- */}
+          <div className="w-full overflow-hidden py-10 border-t border-slate-200/40 relative z-20 bg-white/5 backdrop-blur-sm">
+             <div className="max-w-7xl mx-auto px-4 mb-8 text-center">
+                 <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Trusted By Industry Leaders</p>
+             </div>
+             
+             <div className="flex relative">
+                 <motion.div 
+                    className="flex gap-16 md:gap-24 whitespace-nowrap"
+                    animate={{ x: ["0%", "-50%"] }} 
+                    transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
+                 >
+                    {[...partnerLogos, ...partnerLogos].map((logo, i) => (
+                         <div key={i} className="flex items-center justify-center">
+                            {/* In a real app, replace text with actual SVG logos for better visual appeal */}
+                            <span className="text-xl md:text-2xl font-bold text-slate-300 hover:text-slate-400 transition-colors cursor-default select-none">{logo}</span>
+                         </div>
+                    ))}
+                 </motion.div>
+             </div>
           </div>
         </section>
 
