@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import { 
   LayoutDashboard, UserCheck, Package, FileText, 
   Repeat, Truck, Gavel, CreditCard, Settings, HelpCircle, Store,
-  Menu, X 
+  Home, Wallet, MoreHorizontal
 } from 'lucide-react';
 
 const merchantMenuItems = [
@@ -22,28 +22,24 @@ const merchantMenuItems = [
   { icon: Settings, label: 'Settings', href: '/vendor/merchant/settings' },
 ];
 
+// Simplified items for the Bottom Nav Bar as per your responsive design
+const mobileNavItems = [
+  { icon: Home, label: 'Home', href: '/vendor/merchant/dashboard' },
+  { icon: FileText, label: 'Orders', href: '/vendor/merchant/orders' },
+  { icon: Wallet, label: 'Wallet', href: '/vendor/merchant/transactions' },
+  { icon: Package, label: 'Products', href: '/vendor/merchant/products' },
+  { icon: MoreHorizontal, label: 'More', href: '/vendor/merchant/settings' },
+];
+
 export function MerchantSidebar() {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-     {/* Mobile Toggle Button - Moved to the right */}
-<div className="lg:hidden fixed top-4 right-4 z-[60]"> 
-  <button 
-    onClick={() => setIsOpen(!isOpen)}
-    className="p-2 bg-[#19246a] text-white rounded-lg shadow-md"
-  >
-    {isOpen ? <X size={20} /> : <Menu size={20} />}
-  </button>
-</div>
-
-      {/* Sidebar Container */}
+      {/* --- DESKTOP SIDEBAR --- */}
       <aside className={`
-        fixed lg:sticky top-0 left-0 z-[55]
-        w-[260px] h-screen bg-[#19246a] flex flex-col
-        transition-transform duration-300 ease-in-out
-        ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+        hidden lg:flex sticky top-0 left-0 z-[55]
+        w-[260px] h-screen bg-[#19246a] flex-col
       `}>
         {/* Brand Logo Header */}
         <div className="h-20 flex items-center px-6 bg-white shrink-0">
@@ -84,7 +80,6 @@ export function MerchantSidebar() {
               <Link 
                 key={item.label} 
                 href={item.href}
-                onClick={() => setIsOpen(false)}
                 className={`
                   flex items-center gap-3 px-4 py-2.5 rounded-lg text-[13px] font-medium transition-colors
                   ${isActive 
@@ -110,6 +105,27 @@ export function MerchantSidebar() {
           </button>
         </div>
       </aside>
+
+      {/* --- MOBILE BOTTOM NAVIGATION --- */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 flex justify-around items-center py-2 px-2 z-[100] shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+        {mobileNavItems.map((item) => {
+          const isActive = pathname === item.href;
+          return (
+            <Link 
+              key={item.label} 
+              href={item.href} 
+              className="flex flex-col items-center gap-1 flex-1 min-w-[64px]"
+            >
+              <div className={`p-1.5 rounded-lg transition-colors ${isActive ? 'text-[#19246a]' : 'text-slate-400'}`}>
+                <item.icon size={22} strokeWidth={isActive ? 2.5 : 2} />
+              </div>
+              <span className={`text-[10px] font-bold ${isActive ? "text-[#19246a]" : "text-slate-400"}`}>
+                {item.label}
+              </span>
+            </Link>
+          );
+        })}
+      </nav>
     </>
   );
 }
