@@ -93,7 +93,7 @@ export default function TransactionsPage() {
           {/* Logo Image */}
           <div className="relative w-40 h-10">
              <Image 
-               src="/images/logo-white.png" 
+               src="/images/logo.png" 
                alt="Vendor Ventory" 
                fill
                className="object-contain object-left"
