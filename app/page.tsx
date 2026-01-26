@@ -479,7 +479,8 @@ export default function LandingPage() {
             <SectionHeader 
                badge={<span className="flex items-center gap-1.5"><AlertTriangle size={14} /> The Risk</span>}
                title="Social Commerce is Broken"
-               subtitle="Millions trade on social apps daily, but the lack of trust infrastructure creates massive risks."
+               subtitle="Millions trade on social apps daily, but the lack of trust infrastructure creates massive risks.
+               We protect buyers and vendors doing business on Whatsapp, Instagram, Facebook, Tiktok, X & Telegram"
             />
 
             <motion.div 
