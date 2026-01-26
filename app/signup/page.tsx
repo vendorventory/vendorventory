@@ -115,7 +115,7 @@ export default function SignupPage() {
           <Link href="/">
             <div className="mb-12 cursor-pointer">
               <Image 
-                src="/images/logo-white.png" 
+                src="/images/logo.png" 
                 alt="Vendor Ventory" 
                 width={200} 
                 height={60} 
