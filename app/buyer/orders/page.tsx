@@ -72,6 +72,7 @@ export default function BuyerOrders() {
   ];
 
   const handleActionClick = (order: any) => {
+    // Map order data to match the Tracking Modal interface
     setSelectedOrder({
       id: order.id,
       invoiceId: order.inv,
@@ -83,10 +84,10 @@ export default function BuyerOrders() {
       trackingNumber: order.partnerID || 'N/A',
       estDelivery: order.estDelivery,
       amount: order.amount,
-      description: order.service,
+      description: order.description,
       status: order.status
     });
-    setIsModalOpen(true); // Open the modal
+    setIsModalOpen(true);
   };
 
   return (
