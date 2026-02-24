@@ -7,20 +7,87 @@ import {
   Filter, ExternalLink
 } from 'lucide-react';
 
+// Import the dynamic modal component
+import { OrderTrackingModal } from '../components/OrderTrackingModal';
+
 export default function BuyerOrders() {
   const [activeFilter, setActiveFilter] = useState('All Orders');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<any>(null);
 
   const filters = ['All Orders', 'Processing', 'Shipped', 'Out for Delivery', 'Delivered'];
 
   const orders = [
-    { id: 'ORD-8472', inv: 'INV-1024', vendor: 'Fashion Forward NG', service: 'Custom Tailoring Service', amount: '₦85,000', partner: 'GiG Logistics', partnerID: 'GIG-2925-45678', estDelivery: '2025-02-12', status: 'Out for Delivery', color: 'bg-purple-50 text-purple-600', action: 'Track' },
-    { id: 'ORD-8471', inv: 'INV-1023', vendor: 'Tech Solutions Ltd', service: 'Website Development (Milestone 1)', amount: '₦125,000', partner: 'N/A', partnerID: '', estDelivery: '2025-02-15', status: 'Processing', color: 'bg-amber-50 text-amber-600', action: 'View' },
-    { id: 'ORD-8470', inv: 'INV-1022', vendor: 'Adebayo Fashion Store', service: 'Ankara Print Fabric (5 yards)', amount: '₦125,000', partner: 'DHL Nigeria', partnerID: 'DHL-920-123456', estDelivery: '2025-02-10', status: 'Delivered', color: 'bg-emerald-50 text-emerald-600', action: 'Confirm' },
-    { id: 'ORD-8469', inv: 'INV-1021', vendor: 'Lagos Tech Hub', service: 'MacBook Pro 14" M3', amount: '₦2,450,000', partner: 'FedEx', partnerID: 'FDX-9875641220', estDelivery: '2025-02-14', status: 'Shipped', color: 'bg-blue-50 text-blue-600', action: 'Track' },
-    { id: 'ORD-8468', inv: 'INV-1020', vendor: 'Beauty Essentials NG', service: 'Skincare Bundle', amount: '₦45,000', partner: 'Kwik Delivery', partnerID: 'KWK-2025-1100', estDelivery: '2025-02-11', status: 'Shipped', color: 'bg-blue-50 text-blue-600', action: 'Track' },
-    { id: 'ORD-8467', inv: 'INV-1019', vendor: 'Premium Electronics', service: 'Wireless Headphones', amount: '₦85,000', partner: 'Sendbox', partnerID: 'SBX-2025-3333', estDelivery: '2025-02-09', status: 'Delivered', color: 'bg-emerald-50 text-emerald-600', action: 'Confirm' },
-    { id: 'ORD-8466', inv: 'INV-1018', vendor: 'Fashion Forward NG', service: 'Gaming Chair', amount: '₦60,000', partner: 'GiG Logistics', partnerID: 'GIG-2925-5544', estDelivery: '2025-01-28', status: 'Completed', color: 'bg-emerald-50 text-emerald-600', action: 'View' },
+    { 
+      id: 'ORD-8472', 
+      inv: 'INV-1024', 
+      vendor: 'Fashion Forward NG', 
+      vendorType: 'Verified Vendor',
+      buyer: 'Chioma Nwosu',
+      buyerEmail: 'chioma.nwosu@example.com',
+      service: 'Custom Tailoring Service', 
+      amount: '₦85,000', 
+      partner: 'GiG Logistics', 
+      partnerID: 'GIG-2925-45678', 
+      estDelivery: '2025-02-12', 
+      status: 'Out for Delivery', 
+      description: 'Full custom suit tailoring with premium fabric.',
+      color: 'bg-purple-50 text-purple-600', 
+      action: 'Track' 
+    },
+    { 
+      id: 'ORD-8471', 
+      inv: 'INV-1023', 
+      vendor: 'Tech Solutions Ltd', 
+      vendorType: 'Verified Vendor',
+      buyer: 'Chioma Nwosu',
+      buyerEmail: 'chioma.nwosu@example.com',
+      service: 'Website Development (Milestone 1)', 
+      amount: '₦125,000', 
+      partner: 'N/A', 
+      partnerID: 'N/A', 
+      estDelivery: '2025-02-15', 
+      status: 'Processing', 
+      description: 'Initial UI/UX design and homepage development.',
+      color: 'bg-amber-50 text-amber-600', 
+      action: 'View' 
+    },
+    { 
+      id: 'ORD-8470', 
+      inv: 'INV-1022', 
+      vendor: 'Adebayo Fashion Store', 
+      vendorType: 'Verified Vendor',
+      buyer: 'Chioma Nwosu',
+      buyerEmail: 'chioma.nwosu@example.com',
+      service: 'Ankara Print Fabric (5 yards)', 
+      amount: '₦125,000', 
+      partner: 'DHL Nigeria', 
+      partnerID: 'DHL-NG-123495', 
+      estDelivery: '2025-02-10', 
+      status: 'Completed', 
+      description: 'High-quality Ankara print fabric from Lagos market.',
+      color: 'bg-emerald-50 text-emerald-600', 
+      action: 'Confirm' 
+    },
   ];
+
+  const handleActionClick = (order: any) => {
+    setSelectedOrder({
+      id: order.id,
+      invoiceId: order.inv,
+      vendor: order.vendor,
+      vendorType: order.vendorType,
+      buyer: order.buyer,
+      buyerEmail: order.buyerEmail,
+      deliveryPartner: order.partner,
+      trackingNumber: order.partnerID || 'N/A',
+      estDelivery: order.estDelivery,
+      amount: order.amount,
+      description: order.service,
+      status: order.status
+    });
+    setIsModalOpen(true); // Open the modal
+  };
 
   return (
     <main className="p-4 md:p-8 max-w-7xl mx-auto w-full space-y-8 pb-24">
@@ -112,11 +179,14 @@ export default function BuyerOrders() {
                     </span>
                   </td>
                   <td className="px-8 py-6 text-center">
-                    <button className={`flex items-center justify-center gap-2 mx-auto px-5 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 shadow-sm ${
-                      order.action === 'Track' ? 'bg-blue-600 text-white shadow-blue-100' :
-                      order.action === 'Confirm' ? 'bg-emerald-500 text-white shadow-emerald-100' :
-                      'border border-slate-200 text-slate-500 hover:bg-slate-50'
-                    }`}>
+                    <button 
+                      onClick={() => handleActionClick(order)}
+                      className={`flex items-center justify-center gap-2 mx-auto px-5 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 shadow-sm ${
+                        order.action === 'Track' ? 'bg-blue-600 text-white shadow-blue-100' :
+                        order.action === 'Confirm' ? 'bg-emerald-50 text-white shadow-emerald-100' :
+                        'border border-slate-200 text-slate-500 hover:bg-slate-50'
+                      }`}
+                    >
                       {order.action === 'Track' && <Truck size={14} />}
                       {order.action === 'Confirm' && <CheckCircle2 size={14} />}
                       {order.action === 'View' && <Eye size={14} />}
@@ -128,10 +198,16 @@ export default function BuyerOrders() {
             </tbody>
           </table>
         </div>
-        <div className="p-6 bg-slate-50/50 border-t border-slate-50 text-center">
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Showing 7 of 7 orders</p>
-        </div>
       </div>
+
+      {/* --- MODAL INTEGRATION --- */}
+      {selectedOrder && (
+        <OrderTrackingModal 
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          order={selectedOrder}
+        />
+      )}
     </main>
   );
 }
