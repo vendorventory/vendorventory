@@ -1,14 +1,46 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Search, Filter, Download, Eye, 
   Clock, CheckCircle2, Wallet, 
   RotateCcw, CreditCard, Landmark, 
-  TrendingUp, ArrowUpRight 
+  TrendingUp, ArrowUpRight, ShieldCheck
 } from 'lucide-react';
 
+// Import the details modal
+import { TransactionDetailModal } from '../components/TransactionDetailModal';
+
 export default function BuyerEscrow() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTxn, setSelectedTxn] = useState<any>(null);
+
+  const transactions = [
+    { id: 'TXN-2025-091', order: 'ORD-8472', inv: 'INV-1024', vendor: 'Fashion Forward NG', amount: '₦85,000', method: 'Bank Transfer', status: 'Held in Escrow', date: '2025-02-09', time: '14:30', color: 'bg-amber-50 text-amber-600', methodIcon: Landmark },
+    { id: 'TXN-2025-092', order: 'ORD-8471', inv: 'INV-1022', vendor: 'Tech Solutions Ltd', amount: '₦125,000', method: 'Card', status: 'Held in Escrow', date: '2025-02-07', time: '10:15', color: 'bg-amber-50 text-amber-600', methodIcon: CreditCard },
+    { id: 'TXN-2025-093', order: 'ORD-8400', inv: 'INV-1020', vendor: 'Adebayo Fashion Store', amount: '₦128,000', method: 'Bank Transfer', status: 'Released', date: '2025-02-05', time: '20:45', color: 'bg-emerald-50 text-emerald-600', methodIcon: Landmark },
+    { id: 'TXN-2025-094', order: 'ORD-8457', inv: 'INV-1019', vendor: 'Lagos Tech Hub', amount: '₦2,450,000', method: 'Card', status: 'Pending Release', date: '2025-02-04', time: '11:20', color: 'bg-blue-50 text-blue-600', methodIcon: CreditCard },
+    { id: 'TXN-2025-095', order: 'ORD-8456', inv: 'INV-1018', vendor: 'Beauty Essentials NG', amount: '₦45,000', method: 'Bank Transfer', status: 'Released', date: '2025-02-03', time: '09:30', color: 'bg-emerald-50 text-emerald-600', methodIcon: Landmark },
+    { id: 'TXN-2025-096', order: 'ORD-8460', inv: 'INV-1017', vendor: 'Premium Home Decor', amount: '₦85,000', method: 'Card', status: 'Refunded', date: '2025-01-31', time: '13:45', color: 'bg-slate-100 text-slate-500', methodIcon: CreditCard },
+    { id: 'TXN-2025-097', order: 'ORD-8464', inv: 'INV-1016', vendor: 'Fashion Forward NG', amount: '₦195,000', method: 'Bank Transfer', status: 'Released', date: '2025-01-28', time: '15:20', color: 'bg-emerald-50 text-emerald-600', methodIcon: Landmark },
+    { id: 'TXN-2025-098', order: 'ORD-8463', inv: 'INV-1015', vendor: 'Gadget Haven NG', amount: '₦320,000', method: 'Card', status: 'Under Dispute', date: '2025-01-25', time: '10:00', color: 'bg-red-50 text-red-500', methodIcon: CreditCard },
+  ];
+
+  const handleViewDetails = (txn: any) => {
+    setSelectedTxn({
+      id: txn.id,
+      invoiceId: txn.inv,
+      orderId: txn.order,
+      date: txn.date,
+      time: txn.time,
+      vendor: txn.vendor,
+      amount: txn.amount,
+      method: txn.method,
+      status: txn.status
+    });
+    setIsModalOpen(true); // Open the modal
+  };
+
   return (
     <main className="p-4 md:p-8 max-w-7xl mx-auto w-full space-y-8 pb-24">
       
@@ -53,17 +85,11 @@ export default function BuyerEscrow() {
             className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 border border-slate-100 text-sm font-bold text-[#1e293b] outline-none"
           />
         </div>
-        <div className="flex items-center gap-3 w-full md:w-auto">
-          <div className="relative flex-1 md:w-48">
-            <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
-            <select className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-50 border border-slate-100 text-xs font-black text-slate-500 uppercase tracking-widest outline-none appearance-none cursor-pointer">
-              <option>All Status</option>
-              <option>Held in Escrow</option>
-              <option>Released</option>
-              <option>Pending Release</option>
-              <option>Refunded</option>
+        <div className="flex items-center gap-3 w-auto">
+            <Filter size={18} className="text-slate-400" />
+            <select className="px-4 py-2 bg-slate-50 border border-slate-100 rounded-lg text-xs font-black uppercase tracking-widest text-slate-500 outline-none cursor-pointer">
+                <option>All Status</option>
             </select>
-          </div>
         </div>
       </div>
 
@@ -84,16 +110,7 @@ export default function BuyerEscrow() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
-              {[
-                { id: 'TXN-2025-091', order: 'ORD-8472', inv: 'INV-1024', vendor: 'Fashion Forward NG', amount: '₦85,000', method: 'Bank Transfer', status: 'Held in Escrow', date: '2025-02-09', time: '14:30', color: 'bg-amber-50 text-amber-600', methodIcon: Landmark },
-                { id: 'TXN-2025-092', order: 'ORD-8471', inv: 'INV-1022', vendor: 'Tech Solutions Ltd', amount: '₦125,000', method: 'Card', status: 'Held in Escrow', date: '2025-02-07', time: '10:15', color: 'bg-amber-50 text-amber-600', methodIcon: CreditCard },
-                { id: 'TXN-2025-093', order: 'ORD-8400', inv: 'INV-1020', vendor: 'Adebayo Fashion Store', amount: '₦128,000', method: 'Bank Transfer', status: 'Released', date: '2025-02-05', time: '20:45', color: 'bg-emerald-50 text-emerald-600', methodIcon: Landmark },
-                { id: 'TXN-2025-094', order: 'ORD-8457', inv: 'INV-1019', vendor: 'Lagos Tech Hub', amount: '₦2,450,000', method: 'Card', status: 'Pending Release', date: '2025-02-04', time: '11:20', color: 'bg-blue-50 text-blue-600', methodIcon: CreditCard },
-                { id: 'TXN-2025-095', order: 'ORD-8456', inv: 'INV-1018', vendor: 'Beauty Essentials NG', amount: '₦45,000', method: 'Bank Transfer', status: 'Released', date: '2025-02-03', time: '09:30', color: 'bg-emerald-50 text-emerald-600', methodIcon: Landmark },
-                { id: 'TXN-2025-096', order: 'ORD-8460', inv: 'INV-1017', vendor: 'Premium Home Decor', amount: '₦85,000', method: 'Card', status: 'Refunded', date: '2025-01-31', time: '13:45', color: 'bg-slate-100 text-slate-500', methodIcon: CreditCard },
-                { id: 'TXN-2025-097', order: 'ORD-8464', inv: 'INV-1016', vendor: 'Fashion Forward NG', amount: '₦195,000', method: 'Bank Transfer', status: 'Released', date: '2025-01-28', time: '15:20', color: 'bg-emerald-50 text-emerald-600', methodIcon: Landmark },
-                { id: 'TXN-2025-098', order: 'ORD-8463', inv: 'INV-1015', vendor: 'Gadget Haven NG', amount: '₦320,000', method: 'Card', status: 'Under Dispute', date: '2025-01-25', time: '10:00', color: 'bg-red-50 text-red-500', methodIcon: CreditCard },
-              ].map((txn) => (
+              {transactions.map((txn) => (
                 <tr key={txn.id} className="group hover:bg-slate-50/50 transition-colors">
                   <td className="px-8 py-6">
                     <div className="flex items-center gap-3">
@@ -126,7 +143,10 @@ export default function BuyerEscrow() {
                   </td>
                   <td className="px-8 py-6 text-center">
                     <div className="flex items-center justify-center gap-2">
-                      <button className="p-2 rounded-lg border border-slate-100 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all">
+                      <button 
+                        onClick={() => handleViewDetails(txn)}
+                        className="p-2 rounded-lg border border-slate-100 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all"
+                      >
                         <Eye size={16} />
                       </button>
                       <button className="p-2 rounded-lg border border-slate-100 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all">
@@ -143,6 +163,15 @@ export default function BuyerEscrow() {
           <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Showing 8 of 8 transactions</p>
         </div>
       </div>
+
+      {/* --- MODAL INTEGRATION --- */}
+      {selectedTxn && (
+        <TransactionDetailModal 
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          transaction={selectedTxn}
+        />
+      )}
     </main>
   );
 }

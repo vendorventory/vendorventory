@@ -4,7 +4,7 @@ import React from 'react';
 import { 
   X, CheckCircle2, Clock, 
   CreditCard, Landmark, Download, 
-  Eye, Info 
+  Eye, Info, ShieldCheck
 } from 'lucide-react';
 
 interface TransactionDetailModalProps {
